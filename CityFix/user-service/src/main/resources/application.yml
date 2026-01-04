@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: user-service
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  datasource:
+    url: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  rabbitmq:
+    host: ${RABBITMQ_HOST:rabbitmq}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER}
+    password: ${RABBITMQ_PASS}
+
+server:
+  port: ${USER_SERVICE_PORT:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      enabled: true
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+    tags:
+      application: ${spring.application.name}
+
+jwt:
+  secret: ${JWT_SECRET:your-secret-key-change-in-production-at-least-256-bits-long-for-security}
+  expiration: ${JWT_EXPIRATION_MS:86400000}
+  cookie:
+    name: ${JWT_COOKIE_NAME:JWT_TOKEN}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    org.example.userservice: ${USER_LOG_LEVEL:DEBUG}
+    org.springframework.web: ${SPRING_WEB_LOG_LEVEL:DEBUG}
+    org.springframework.security: ${SPRING_SECURITY_LOG_LEVEL:DEBUG}
