@@ -1,0 +1,59 @@
+groups:
+  - name: cityfix_alerts
+    interval: 30s
+    rules:
+
+      - alert: ServiceDown
+        expr: up{job=~".*-service|gateway"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service {{ $labels.job }} is down"
+          description: "{{ $labels.job }} has been down for more than 1 minute"
+
+      - alert: HighRequestRate
+        expr: sum by (application) (rate(http_server_requests_seconds_count[1m])) > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High request rate on {{ $labels.application }}"
+          description: "Request rate is above 100 req/s (current: {{ $value }})"
+
+      - alert: NoRequests
+        expr: sum by (application) (rate(http_server_requests_seconds_count[5m])) == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "No requests on {{ $labels.application }}"
+          description: "{{ $labels.application }} hasn't received any requests in the last 5 minutes"
+
+      - alert: HighMemoryUsage
+        expr: (jvm_memory_used_bytes / jvm_memory_max_bytes) > 0.85
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage on {{ $labels.application }}"
+          description: "Memory usage is above 85% (current: {{ $value | humanizePercentage }})"
+
+      - alert: HighCPUUsage
+        expr: (rate(process_cpu_seconds_total[5m]) * 100) > 80
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on {{ $labels.application }}"
+          description: "CPU usage is above 80% (current: {{ $value }}%)"
+
+      - alert: TooManyConnections
+        expr: jvm_threads_live_threads > 200
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Too many threads on {{ $labels.application }}"
+          description: "Live thread count is above 200 (current: {{ $value }})"
+
