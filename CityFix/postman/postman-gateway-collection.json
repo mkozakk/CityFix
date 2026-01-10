@@ -1,0 +1,283 @@
+{
+  "info": {
+    "name": "CityFix API - Complete Collection",
+    "description": "Complete API endpoints for CityFix system including User Service, Report Service, and Log Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Service (Gateway)",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"johndoe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePass123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+48123456789\"\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/users/register",
+              "host": ["{{gateway_url}}"],
+              "path": ["users", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"johndoe\",\n  \"password\": \"SecurePass123\"\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/users/login",
+              "host": ["{{gateway_url}}"],
+              "path": ["users", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway_url}}/users/me",
+              "host": ["{{gateway_url}}"],
+              "path": ["users", "me"]
+            }
+          }
+        },
+        {
+          "name": "Update Current User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jonathan\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jonathan.smith@example.com\",\n  \"phone\": \"+48987654321\"\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/users/me",
+              "host": ["{{gateway_url}}"],
+              "path": ["users", "me"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{gateway_url}}/users/logout",
+              "host": ["{{gateway_url}}"],
+              "path": ["users", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Report Service (Gateway)",
+      "item": [
+        {
+          "name": "Create Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Broken street light\",\n  \"description\": \"Street light at Main St is not working\",\n  \"category\": \"INFRASTRUCTURE\",\n  \"priority\": \"MEDIUM\",\n  \"latitude\": 51.5074,\n  \"longitude\": -0.1278\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/reports",
+              "host": ["{{gateway_url}}"],
+              "path": ["reports"]
+            }
+          }
+        },
+        {
+          "name": "Get All Reports",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway_url}}/reports",
+              "host": ["{{gateway_url}}"],
+              "path": ["reports"]
+            }
+          }
+        },
+        {
+          "name": "Get Report by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway_url}}/reports/{{report_id}}",
+              "host": ["{{gateway_url}}"],
+              "path": ["reports", "{{report_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Report",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Broken street light - URGENT\",\n  \"description\": \"Street light at Main St is not working - needs immediate attention\",\n  \"status\": \"IN_PROGRESS\",\n  \"category\": \"INFRASTRUCTURE\",\n  \"priority\": \"HIGH\",\n  \"latitude\": 51.5074,\n  \"longitude\": -0.1278\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/reports/{{report_id}}",
+              "host": ["{{gateway_url}}"],
+              "path": ["reports", "{{report_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Report",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway_url}}/reports/{{report_id}}",
+              "host": ["{{gateway_url}}"],
+              "path": ["reports", "{{report_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Log Service (Gateway)",
+      "item": [
+        {
+          "name": "Get All Audit Logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway_url}}/logs?password={{log_access_password}}",
+              "host": ["{{gateway_url}}"],
+              "path": ["logs"],
+              "query": [
+                {
+                  "key": "password",
+                  "value": "{{log_access_password}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Logs by User ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway_url}}/logs?password={{log_access_password}}&userId=1&limit=50",
+              "host": ["{{gateway_url}}"],
+              "path": ["logs"],
+              "query": [
+                {
+                  "key": "password",
+                  "value": "{{log_access_password}}"
+                },
+                {
+                  "key": "userId",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Logs by Event Type",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway_url}}/logs?password={{log_access_password}}&eventType=REPORT_CREATED&limit=50",
+              "host": ["{{gateway_url}}"],
+              "path": ["logs"],
+              "query": [
+                {
+                  "key": "password",
+                  "value": "{{log_access_password}}"
+                },
+                {
+                  "key": "eventType",
+                  "value": "REPORT_CREATED"
+                },
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "gateway_url",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    },
+    {
+      "key": "log_access_password",
+      "value": "someverylongstring",
+      "type": "string",
+      "disabled": false
+    },
+    {
+      "key": "report_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "log_id",
+      "value": "1",
+      "type": "string"
+    }
+  ]
+}
+
