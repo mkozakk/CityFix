@@ -147,8 +147,33 @@ Projekt zawiera GitHub Actions workflows w `.github/workflows/`:
 **1. ci-cd.yml** - Główny pipeline
 - ✅ Uruchamia testy (3 serwisy parallel)
 - ✅ CodeQL security analysis
-- ✅ Build Docker images
-- ✅ Deploy (opcjonalnie)
+- ✅ Build i push Docker images do GHCR
+- ✅ Deploy z wersjonowanymi obrazami
+
+**2. release.yml** - Release workflow
+- ✅ Tworzy GitHub Release
+- ✅ Build i push release images do GHCR
+- ✅ Generuje changelog
+
+### Docker Images w GitHub Container Registry
+
+Wszystkie obrazy Docker są automatycznie budowane i publikowane do GitHub Container Registry (GHCR):
+
+**Dostępne obrazy:**
+- `ghcr.io/OWNER/cityfix-user-service:VERSION`
+- `ghcr.io/OWNER/cityfix-report-service:VERSION`
+- `ghcr.io/OWNER/cityfix-log-service:VERSION`
+- `ghcr.io/OWNER/cityfix-gateway:VERSION`
+
+**Wersjonowanie:**
+- Push do `main`: `main-abc12345` (branch-commit SHA)
+- Release tag: `v1.0.0` (semantic version)
+- Zawsze: `latest` (najnowsza wersja)
+
+**Konfiguracja:**
+Szczegółowy przewodnik konfiguracji GHCR znajduje się w:
+- 📖 [GHCR_SETUP_GUIDE.md](GHCR_SETUP_GUIDE.md) - Pełna konfiguracja
+- 📖 [SECRETS_SETUP_GUIDE.md](SECRETS_SETUP_GUIDE.md) - Konfiguracja secrets
 
 **Trigger:** Push do main/develop, PR, tag v*
 
