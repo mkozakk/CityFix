@@ -1,0 +1,34 @@
+name: "CityFix CodeQL Configuration"
+
+paths:
+  - 'user-service/src/main/java'
+  - 'report-service/src/main/java'
+  - 'log-service/src/main/java'
+  - 'gateway/src/main/java'
+
+paths-ignore:
+  - '**/test/**'
+  - '**/build/**'
+  - '**/target/**'
+  - '**/*.test.java'
+
+queries:
+  - uses: security-and-quality
+  - uses: security-extended
+
+query-filters:
+  - include:
+      kind: problem
+      problem.severity: error
+  - include:
+      kind: problem
+      problem.severity: warning
+  - include:
+      kind: problem
+      tags:
+        - security
+        - external/cwe
+
+packs:
+  - codeql/java-queries
+
