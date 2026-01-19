@@ -61,8 +61,8 @@ jobs:
             ### Deployment
             ```bash
             export VERSION=${{ steps.version.outputs.VERSION }}
-            docker-compose pull
-            docker-compose up -d
+            docker compose pull
+            docker compose up -d
             ```
           draft: false
           prerelease: false
