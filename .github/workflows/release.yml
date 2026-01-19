@@ -92,8 +92,8 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./${{ matrix.service }}
-          file: ./${{ matrix.service }}/Dockerfile
+          context: ./CityFix/${{ matrix.service }}
+          file: ./CityFix/${{ matrix.service }}/Dockerfile
           push: false
           tags: cityfix-${{ matrix.service }}:${{ steps.version.outputs.VERSION }}
           build-args: |
