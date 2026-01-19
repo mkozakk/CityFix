@@ -35,11 +35,9 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        working-directory: ./CityFix/${{ matrix.service }}
 
       - name: Run tests for ${{ matrix.service }}
-        run: ./gradlew test
-        working-directory: ./CityFix/${{ matrix.service }}
+        run: ./gradlew :CityFix:${{ matrix.service }}:test
 
       - name: Upload test results
         if: always()
@@ -89,11 +87,9 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        working-directory: ./CityFix
 
       - name: Build with Gradle
         run: ./gradlew clean build -x test
-        working-directory: ./CityFix
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
