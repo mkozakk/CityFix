@@ -206,9 +206,9 @@ jobs:
 
       - name: Deploy with Docker Compose
         run: |
-          docker-compose -f CityFix/docker-compose.yml down
-          docker-compose -f CityFix/docker-compose.yml pull
-          docker-compose -f CityFix/docker-compose.yml up -d
+          docker-compose down
+          docker-compose pull
+          docker-compose up -d
         env:
           VERSION: ${{ steps.version.outputs.VERSION }}
 
@@ -216,7 +216,7 @@ jobs:
         run: |
           echo "Waiting for services to start..."
           sleep 30
-          docker-compose -f CityFix/docker-compose.yml ps
+          docker-compose ps
 
       - name: Health check
         run: |
